@@ -5,51 +5,45 @@ import CoinList from './components/CoinList/CoinList';
 import Header from './components/Header/Header'
 
 class App extends Component {
+  state = {
+    balance: 10000,
+    showBalance: true,
+    coinData: [
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      balance: 10000,
-      showBalance: true,
-      coinData: [
-
-        {
-          name: 'Bitcoin',
-          ticker: 'BTC',
-          balance: 0.5,
-          price: 9999.99
-        },
-        {
-          name: 'Ethereum',
-          ticker: 'ETC',
-          balance: 32.0,
-          price: 299.99
-        },
-        {
-          name: 'Tether',
-          ticker: 'USDT',
-          balance: 0,
-          price: 1
-        },
-        {
-          name: 'Ripple',
-          ticker: 'XRP',
-          balance: 1000,
-          price: 0.2
-        },
-        {
-          name: 'Bitcoin Cash',
-          ticker: 'BCH',
-          balance: 0,
-          price: 298.99
-        }
-      ]
-    }
-    this.handleRefresh = this.handleRefresh.bind(this)
-    this.handleBalanceVisibilityChange = this.handleBalanceVisibilityChange.bind(this)
+      {
+        name: 'Bitcoin',
+        ticker: 'BTC',
+        balance: 0.5,
+        price: 9999.99
+      },
+      {
+        name: 'Ethereum',
+        ticker: 'ETC',
+        balance: 32.0,
+        price: 299.99
+      },
+      {
+        name: 'Tether',
+        ticker: 'USDT',
+        balance: 0,
+        price: 1
+      },
+      {
+        name: 'Ripple',
+        ticker: 'XRP',
+        balance: 1000,
+        price: 0.2
+      },
+      {
+        name: 'Bitcoin Cash',
+        ticker: 'BCH',
+        balance: 0,
+        price: 298.99
+      }
+    ]
   }
 
-  handleRefresh(valueChangeTicker) {
+  handleRefresh = (valueChangeTicker) => {
     const newCoinData = this.state.coinData.map( function({ticker, name, price, balance}) {
       let newPrice = price
       if (valueChangeTicker === ticker ) {
@@ -66,7 +60,7 @@ class App extends Component {
     this.setState({ coinData: newCoinData })
   }
 
-  handleBalanceVisibilityChange() {
+  handleBalanceVisibilityChange = () => {
     this.setState( function(oldState) {
       return {
         ...oldState,

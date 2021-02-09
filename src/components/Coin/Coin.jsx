@@ -9,10 +9,6 @@ const CoinRow = styled.td`
 `;
 
 export default class Coin extends Component {
-    constructor(props) {
-        super(props);
-        this.handleClick = this.handleClick.bind(this)
-    }
 
     // Runs when component is loaded onto the DOM
     // componentDidMount() {
@@ -29,7 +25,7 @@ export default class Coin extends Component {
     //     setInterval(callback, 1000);
     // }
 
-    handleClick(event) {
+    handleClick = (event) => {
         // Prevent the default action of submitting  the form
         event.preventDefault();
 
