@@ -11,10 +11,7 @@ const CoinRow = styled.td`
 export default class Coin extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            price: this.props.price
-        }
-        this.handleClick = this.handleClick.bind(this);
+        this.handleClick = this.handleClick.bind(this)
     }
 
     // Runs when component is loaded onto the DOM
@@ -36,13 +33,8 @@ export default class Coin extends Component {
         // Prevent the default action of submitting  the form
         event.preventDefault();
 
-        const randomPercentage = 0.995 + Math.random() * 0.01;
-
-        this.setState( function(oldState) {
-            return {
-                price: oldState.price * randomPercentage
-            }
-        });
+        this.props.handleRefresh(this.props.ticker)
+        
     }
 
     render() {
@@ -50,7 +42,7 @@ export default class Coin extends Component {
             <tr>
               <CoinRow>{this.props.name}</CoinRow>
               <CoinRow>{this.props.ticker}</CoinRow>
-              <CoinRow>${this.state.price}</CoinRow>
+              <CoinRow>${this.props.price}</CoinRow>
               <CoinRow>
                   <form action="#" method="POST">
                     <button onClick={this.handleClick}>Refresh</button>
