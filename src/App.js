@@ -6,6 +6,8 @@ import Header from './components/Header/Header';
 import axios from 'axios';
 
 const COIN_COUNT = 10;
+
+const formatPrice = price => parseFloat(Number(price).toFixed(2));
 class App extends Component {
   state = {
     balance: 10000,
@@ -59,19 +61,21 @@ class App extends Component {
         name: coin.name,
         ticker: coin.symbol,
         balance:  0,
-        price:  parseFloat(Number(coin.quotes.USD.price).toFixed(2)),
+        price:  formatPrice(coin.quotes.USD.price),
       };
     });
     // Retrieves the price
     this.setState({ coinData: coinPriceData });
   }
 
-  handleRefresh = (valueChangeTicker) => {
+  handleRefresh = async (valueChangeTickerId) => {
+    const tickerUrl = 'https://api.coinpaprika.com/v1/tickers/' + valueChangeTickerId;
+    const response = await axios.get(tickerUrl);
+    const newPrice = formatPrice(response.data.quotes.USD.price);
     const newCoinData = this.state.coinData.map( function(values) {
       let newValues = {...values}
-      if (valueChangeTicker === values.ticker ) {
-        const randomPercentage = 0.995 + Math.random() * 0.01;
-        newValues.price *= randomPercentage
+      if (valueChangeTickerId === values.key ) {
+        newValues.price = newPrice
       }
       return newValues
     });
