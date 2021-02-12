@@ -3,11 +3,24 @@ import PropTypes from 'prop-types'
 
 import styled from 'styled-components'
 
-const CoinRow = styled.td`
+const Td = styled.td`
     border: 1px solid #cccccc;
-    width: 25vh;
+    width: 14vw;
 `;
 
+const TdControls = styled(Td)`
+    width: 34vw;
+`;
+
+const TdName = styled(Td)`
+    width: 24vw;
+`;
+
+const Button = styled.button`
+    font-size: 11px;
+    width: 100px;
+    margin: 3px 5px 0;
+`;
 export default function Coin(props) {
 
     // Runs when component is loaded onto the DOM
@@ -25,26 +38,40 @@ export default function Coin(props) {
     //     setInterval(callback, 1000);
     // }
 
-    const handleClick = (event) => {
+    const handleRefresh = (event) => {
         // Prevent the default action of submitting  the form
         event.preventDefault();
 
-        props.handleRefresh(props.tickerId)
-        
+        props.handleRefresh(props.tickerId) 
+    }
+
+    const handleBuy = (event) => {
+        // Prevent the default action of submitting  the form
+        event.preventDefault();
+
+        props.handleTransaction(true, props.tickerId)   
+    }
+
+    const handleSell = (event) => {
+        // Prevent the default action of submitting  the form
+        event.preventDefault();
+
+        props.handleTransaction(false, props.tickerId)   
     }
 
     return (
         <tr>
-            <CoinRow>{props.name}</CoinRow>
-            <CoinRow>{props.ticker}</CoinRow>
-            <CoinRow>${props.price}</CoinRow>
-            {props.showBalance ? <CoinRow>${props.balance}</CoinRow> : null}
-            <CoinRow>
+            <TdName>{props.name}</TdName>
+            <Td>{props.ticker}</Td>
+            <Td>${props.price}</Td>
+            <Td>{props.showBalance ? `${props.balance}` : '-'}</Td>
+            <TdControls>
                 <form action="#" method="POST">
-                <button onClick={handleClick}>Refresh</button>
+                    <Button className="btn btn-info" onClick={handleRefresh}>Refresh</Button>
+                    <Button className="btn btn-success" onClick={handleBuy}>Buy</Button>
+                    <Button className="btn btn-danger" onClick={handleSell}>Sell</Button>
                 </form>
-                
-            </CoinRow>
+            </TdControls>
         </tr> 
     )
 }
